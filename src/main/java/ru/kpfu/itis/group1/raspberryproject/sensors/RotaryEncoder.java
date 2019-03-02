@@ -13,8 +13,8 @@ public class RotaryEncoder {
 
     public RotaryEncoder(final String clkPinName,
                          final String DtPinName) {
-        final GpioController gpio = GpioControllerSingleton.getGpioController();
 
+        final GpioController gpio = GpioControllerSingleton.getGpioController();
         CLK = gpio.provisionDigitalInputPin(RaspiPin.getPinByName(clkPinName),
                 PinPullResistance.PULL_DOWN);
         DT = gpio.provisionDigitalInputPin(RaspiPin.getPinByName(DtPinName),
@@ -25,7 +25,11 @@ public class RotaryEncoder {
     }
 
 
-    //Runnable will be run, after any action with rotary encoder
+    /**
+     * Runnable will be run, after any action with rotary encoder
+     *
+     * @param runnable
+     */
     public void addTriggerOnAction(final Runnable runnable){
         CLK.addTrigger(new GpioCallbackTrigger(() -> {
             runnable.run();
@@ -33,7 +37,12 @@ public class RotaryEncoder {
         }));
     }
 
-    //Runnable will be run, after clockwise rotation
+
+    /**
+     * Runnable will be run, after clockwise rotation
+     *
+     * @param runnable
+     */
     public void addTriggerOnClockwiseRotation(final Runnable runnable){
         CLK.addListener((GpioPinListenerDigital) event -> {
             final PinState newState = event.getState();
@@ -46,7 +55,12 @@ public class RotaryEncoder {
         });
     }
 
-    //Runnable will be run, after anti clockwise rotation
+
+    /**
+     * Runnable will be run, after anti clockwise rotation
+     *
+     * @param runnable
+     */
     public void addTriggerOnAntiClockwiseRotation(final Runnable runnable){
         CLK.addListener((GpioPinListenerDigital) event -> {
             final PinState newState = event.getState();
