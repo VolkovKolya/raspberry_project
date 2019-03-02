@@ -45,9 +45,10 @@ public class RotaryEncoder {
      */
     public void addTriggerOnClockwiseRotation(final Runnable runnable) {
         CLK.addListener((GpioPinListenerDigital) event -> {
+
             final PinState newState = event.getState();
             if (newState != PinsLastStateHolder.lastClkState) {
-                if (DT.getState() == newState) {
+                if (DT.getState() != newState) {
                     runnable.run();
                 }
                 PinsLastStateHolder.lastClkState = newState;
@@ -63,12 +64,13 @@ public class RotaryEncoder {
      */
     public void addTriggerOnAntiClockwiseRotation(final Runnable runnable) {
         DT.addListener((GpioPinListenerDigital) event -> {
+
             final PinState newState = event.getState();
             if (newState != PinsLastStateHolder.lastDtState) {
-                if (CLK.getState() == newState) {
+                if (CLK.getState() != newState) {
                     runnable.run();
                 }
-                PinsLastStateHolder.lastClkState = newState;
+                PinsLastStateHolder.lastDtState = newState;
             }
         });
     }
