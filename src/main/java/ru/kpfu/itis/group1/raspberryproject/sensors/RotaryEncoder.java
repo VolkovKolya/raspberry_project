@@ -30,7 +30,7 @@ public class RotaryEncoder {
      *
      * @param runnable
      */
-    public void addTriggerOnAction(final Runnable runnable){
+    public void addTriggerOnAction(final Runnable runnable) {
         CLK.addTrigger(new GpioCallbackTrigger(() -> {
             runnable.run();
             return null;
@@ -43,11 +43,13 @@ public class RotaryEncoder {
      *
      * @param runnable
      */
-    public void addTriggerOnClockwiseRotation(final Runnable runnable){
+    public void addTriggerOnClockwiseRotation(final Runnable runnable) {
         CLK.addListener((GpioPinListenerDigital) event -> {
+            System.out.println("In ClockWise. Last state:" + PinsLastStateHolder.lastClkState +
+                    " New state:" + event.getState() + " DT state:" + DT.getState());
             final PinState newState = event.getState();
-            if(newState != PinsLastStateHolder.lastClkState){
-                if(DT.getState()!=newState){
+            if (newState != PinsLastStateHolder.lastClkState) {
+                if (DT.getState() != newState) {
                     runnable.run();
                 }
                 PinsLastStateHolder.lastClkState = newState;
@@ -61,11 +63,13 @@ public class RotaryEncoder {
      *
      * @param runnable
      */
-    public void addTriggerOnAntiClockwiseRotation(final Runnable runnable){
+    public void addTriggerOnAntiClockwiseRotation(final Runnable runnable) {
         CLK.addListener((GpioPinListenerDigital) event -> {
+            System.out.println("In AntiClockWise. Last state:" + PinsLastStateHolder.lastClkState +
+                    " New state:" + event.getState() + " DT state:" + DT.getState());
             final PinState newState = event.getState();
-            if(newState!= PinsLastStateHolder.lastClkState){
-                if(DT.getState()==newState){
+            if (newState != PinsLastStateHolder.lastClkState) {
+                if (DT.getState() == newState) {
                     runnable.run();
                 }
                 PinsLastStateHolder.lastClkState = newState;
@@ -73,18 +77,18 @@ public class RotaryEncoder {
         });
     }
 
-    public void removeListeners(){
+    public void removeListeners() {
         CLK.removeAllListeners();
         DT.removeAllListeners();
     }
 
-    public void removeTrigers(){
+    public void removeTrigers() {
         CLK.removeAllTriggers();
         DT.removeAllTriggers();
     }
 
-    private static class PinsLastStateHolder{
-         private static PinState lastClkState;
+    private static class PinsLastStateHolder {
+        private static PinState lastClkState;
     }
 
 }
