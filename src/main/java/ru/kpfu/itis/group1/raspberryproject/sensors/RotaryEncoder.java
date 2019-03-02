@@ -64,12 +64,12 @@ public class RotaryEncoder {
      * @param runnable
      */
     public void addTriggerOnAntiClockwiseRotation(final Runnable runnable) {
-        CLK.addListener((GpioPinListenerDigital) event -> {
-            System.out.println("In AntiClockWise. Last state:" + PinsLastStateHolder.lastClkState +
-                    " New state:" + event.getState() + " DT state:" + DT.getState());
+        DT.addListener((GpioPinListenerDigital) event -> {
+            System.out.println("In AntiClockWise. Last state:" + PinsLastStateHolder.lastDtState +
+                    " New state:" + event.getState() + " CLK state:" + CLK.getState());
             final PinState newState = event.getState();
-            if (newState != PinsLastStateHolder.lastClkState) {
-                if (DT.getState() == newState) {
+            if (newState != PinsLastStateHolder.lastDtState) {
+                if (CLK.getState() == newState) {
                     runnable.run();
                 }
                 PinsLastStateHolder.lastClkState = newState;
@@ -89,6 +89,7 @@ public class RotaryEncoder {
 
     private static class PinsLastStateHolder {
         private static PinState lastClkState;
+        private static PinState lastDtState;
     }
 
 }
