@@ -47,11 +47,12 @@ public class RotaryEncoder {
      *
      * @param runnable
      */
-    public void addTriggerOnAction(final Runnable runnable) {
-        SW.addTrigger(new GpioCallbackTrigger(() -> {
-            runnable.run();
-            return null;
-        }));
+    public void addTriggerOnPushButton(final Runnable runnable) {
+        SW.addListener((GpioPinListenerDigital) event -> {
+            if (event.getState() == PinState.HIGH) {
+                runnable.run();
+            }
+        });
     }
 
     /**

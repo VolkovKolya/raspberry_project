@@ -33,7 +33,7 @@ public class Main {
             laserEmitter.turnOn(2000);
         });
 
-        rotaryEncoder.addTriggerOnAction(laserEmitter::inverseState);
+        rotaryEncoder.addTriggerOnPushButton(laserEmitter::inverseState);
 
         rotaryEncoder.addTriggerOnClockwiseRotation(() -> {
             System.out.println("Rotary encoder is spinning clockwise");
