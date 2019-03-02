@@ -25,4 +25,8 @@ public class LaserEmitter {
         PIN.setState(PinState.LOW);
     }
 
+    public void inverseState() {
+        PIN.toggle();
+    }
+
 }

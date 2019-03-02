@@ -19,7 +19,8 @@ public class Main {
 
         final RotaryEncoder rotaryEncoder = new RotaryEncoder(
                 prop.getProperty("rotary-encoder.clk-pin"),
-                prop.getProperty("rotary-encoder.dt-pin")
+                prop.getProperty("rotary-encoder.dt-pin"),
+                prop.getProperty("rotary-encoder.sw-pin")
         );
 
         final LaserEmitter laserEmitter = new LaserEmitter(
@@ -28,9 +29,11 @@ public class Main {
 
 
 
-        rotaryEncoder.addTriggerOnAction(() -> {
-                    laserEmitter.turnOn(2000);
+        rotaryEncoder.addTriggerOnRotation(() -> {
+            laserEmitter.turnOn(2000);
         });
+
+        rotaryEncoder.addTriggerOnAction(laserEmitter::inverseState);
 
         rotaryEncoder.addTriggerOnClockwiseRotation(() -> {
             System.out.println("Rotary encoder is spinning clockwise");
