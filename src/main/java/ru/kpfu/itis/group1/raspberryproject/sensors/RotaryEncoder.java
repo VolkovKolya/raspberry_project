@@ -4,7 +4,7 @@ import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import ru.kpfu.itis.group1.raspberryproject.configs.GpioControllerSingleton;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,10 +14,10 @@ public class RotaryEncoder {
     private final GpioPinDigitalInput DT;
     private final GpioPinDigitalInput SW;
 
-    private List<Runnable> clockwiseTasks = Collections.emptyList();
-    private List<Runnable> antiClockwiseTasks = Collections.emptyList();
-    private List<Runnable> rotationTasks = Collections.emptyList();
-    private List<Runnable> pushButtonTasks = Collections.emptyList();
+    private List<Runnable> clockwiseTasks = new ArrayList<>();
+    private List<Runnable> antiClockwiseTasks = new ArrayList<>();
+    private List<Runnable> rotationTasks = new ArrayList<>();
+    private List<Runnable> pushButtonTasks = new ArrayList<>();
 
     public RotaryEncoder(final String clkPinName,
                          final String dtPinName,
@@ -64,8 +64,7 @@ public class RotaryEncoder {
             if (newState != PinsLastStateHolder.lastClkState) {
                 if (DT.getState() != newState) {
                     antiClockwiseTasks.forEach(Runnable::run);
-                }
-                else{
+                } else {
                     clockwiseTasks.forEach(Runnable::run);
                 }
                 PinsLastStateHolder.lastClkState = newState;
