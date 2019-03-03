@@ -24,23 +24,24 @@ public class Main {
         );
 
         final LaserEmitter laserEmitter = new LaserEmitter(
-                prop.getProperty("laser-emitter.pin")
+                prop.getProperty("laser-emitter.pin"),
+                prop.getProperty("laser-emitter.pwm-pin")
         );
 
 
-
-        rotaryEncoder.addTaskOnRotation(() -> {
-            laserEmitter.turnOn(2000);
+        rotaryEncoder.addTaskOnPushButton(() -> {
+            System.out.println("Button on rotary encoder is pushing");
+            laserEmitter.inverseState();
         });
-
-        rotaryEncoder.addTaskOnPushButton(laserEmitter::inverseState);
 
         rotaryEncoder.addTaskOnClockwiseRotation(() -> {
             System.out.println("Rotary encoder is spinning clockwise");
+            laserEmitter.incPwm();
         });
 
         rotaryEncoder.addTaskOnAntiClockwiseRotation(() -> {
             System.out.println("Rotary encoder is spinning counterclockwise");
+            laserEmitter.decPwm();
         });
 
         System.out.println("The program is running");
