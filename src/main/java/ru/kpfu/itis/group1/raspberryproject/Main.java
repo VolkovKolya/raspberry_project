@@ -29,17 +29,17 @@ public class Main {
 
 
 
-        rotaryEncoder.addTriggerOnRotation(() -> {
+        rotaryEncoder.addTaskOnRotation(() -> {
             laserEmitter.turnOn(2000);
         });
 
-        rotaryEncoder.addTriggerOnPushButton(laserEmitter::inverseState);
+        rotaryEncoder.addTaskOnPushButton(laserEmitter::inverseState);
 
-        rotaryEncoder.addTriggerOnClockwiseRotation(() -> {
+        rotaryEncoder.addTaskOnClockwiseRotation(() -> {
             System.out.println("Rotary encoder is spinning clockwise");
         });
 
-        rotaryEncoder.addTriggerOnAntiClockwiseRotation(() -> {
+        rotaryEncoder.addTaskOnAntiClockwiseRotation(() -> {
             System.out.println("Rotary encoder is spinning counterclockwise");
         });
 
