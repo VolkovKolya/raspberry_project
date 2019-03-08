@@ -11,7 +11,7 @@ public class LaserEmitter {
         final GpioController gpio = GpioControllerSingleton.getGpioController();
 
         PIN = gpio.provisionDigitalOutputPin(RaspiPin.getPinByName(pinName), PinState.LOW);
-        PWM_PIN = gpio.provisionSoftPwmOutputPin(RaspiPin.getPinByName(pwmPinName));
+        PWM_PIN = gpio.provisionPwmOutputPin(RaspiPin.getPinByName(pwmPinName));
 
         PIN.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
         PWM_PIN.setShutdownOptions(true, PinState.LOW, PinPullResistance.OFF);
