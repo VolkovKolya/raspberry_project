@@ -52,7 +52,7 @@ public class Main {
             try {
                 mqttClient.publish(
                         buttonQueue,
-                        null,
+                        "".getBytes(),
                         1,
                         false);
             } catch (MqttException e) {
